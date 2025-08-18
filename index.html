@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="google-site-verification" content="ZZf6hFdKjW2fkljiJXRCDUufQA8a-2s87MdSyl0cIIk" />
+  <title>CalcSir — All-in-One Calculators (Age, BMI, EMI, Percentage, Unit Converter, Love & Friendship)</title>
+  <meta name="description" content="Free one-page calculator hub: Age Calculator, BMI, Loan EMI, Percentage tools, Unit Converter, and fun Love & Friendship calculators. No sign-up, super fast, mobile friendly." />
+  <meta name="keywords" content="age calculator,bmi calculator,emi calculator,percentage calculator,unit converter,love calculator,friendship calculator,online tools" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;         /* slate-900 */
+      --panel: #111827;      /* gray-900 */
+      --card: #0b1220;       /* custom dark */
+      --text: #e5e7eb;       /* gray-200 */
+      --muted: #9ca3af;      /* gray-400 */
+      --primary: #60a5fa;    /* blue-400 */
+      --accent: #22d3ee;     /* cyan-400 */
+      --danger: #f87171;     /* red-400 */
+      --success: #34d399;    /* green-400 */
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text); background: radial-gradient(1200px 800px at 10% -10%, rgba(96,165,250,.15), transparent 50%),
+                          radial-gradient(900px 600px at 110% 10%, rgba(34,211,238,.12), transparent 50%),
+                          var(--bg);
+    }
+    header {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.65));
+      border-bottom: 1px solid rgba(148,163,184,.15);
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 14px 18px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .3px; }
+    .logo {
+      width: 36px; height: 36px; display: grid; place-items: center; border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent)); color: #0b1220; font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+    nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    nav a {
+      color: var(--text); text-decoration: none; padding: 8px 12px; border-radius: 999px;
+      border: 1px solid rgba(148,163,184,.18); font-size: 13px; opacity: .9;
+    }
+    nav a:hover { border-color: rgba(96,165,250,.6); background: rgba(96,165,250,.08); }
+
+    .hero { padding: 44px 18px 10px; text-align: center; }
+    .hero h1 { margin: 0 0 6px; font-size: clamp(26px, 4vw, 40px); }
+    .hero p { margin: 0; color: var(--muted); }
+
+    main { padding: 20px 18px 70px; }
+    .grid { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; grid-template-columns: repeat(12, 1fr); }
+    .card {
+      grid-column: span 12; background: linear-gradient(180deg, rgba(17,24,39,.9), rgba(17,24,39,.72));
+      border: 1px solid rgba(148,163,184,.15); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 18px; position: relative; overflow: hidden;
+    }
+    .card h2 { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-size: 20px; }
+    .badge { font-size: 11px; color: #0b1220; background: var(--accent); border-radius: 999px; padding: 2px 8px; font-weight: 700; }
+    .muted { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+
+    @media (min-width: 720px) {
+      .span-6 { grid-column: span 6; }
+      .span-4 { grid-column: span 4; }
+      .span-8 { grid-column: span 8; }
+    }
+
+    label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 6px; }
+    input[type="number"], input[type="text"], input[type="date"], select {
+      width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(148,163,184,.25);
+      background: #0a1220; color: var(--text); outline: none; transition: border .2s ease;
+    }
+    input:focus, select:focus { border-color: var(--primary); }
+    .row { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width: 640px) { .row.two { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 840px) { .row.three { grid-template-columns: repeat(3, 1fr); } }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(148,163,184,.25);
+      background: linear-gradient(135deg, rgba(96,165,250,.18), rgba(34,211,238,.18)); color: var(--text); cursor: pointer;
+      font-weight: 600; box-shadow: var(--shadow);
+    }
+    .btn:hover { border-color: rgba(96,165,250,.6); }
+    .btn.secondary { background: transparent; }
+    .btn.copy { position: absolute; top: 14px; right: 14px; font-size: 12px; padding: 6px 10px; }
+
+    .result {
+      margin-top: 12px; padding: 12px; background: #0a1326; border: 1px dashed rgba(148,163,184,.35); border-radius: 12px; white-space: pre-wrap;
+    }
+    .tiny { font-size: 12px; color: var(--muted); }
+    footer { text-align: center; color: var(--muted); padding: 24px; }
+    a.inline { color: var(--primary); text-decoration: none; }
+
+    /* Small embellishments */
+    .spark { position: absolute; inset: -40px; background: radial-gradient(500px 300px at 120% -10%, rgba(96,165,250,.12), transparent 30%),
+                                   radial-gradient(400px 260px at -10% 110%, rgba(34,211,238,.10), transparent 35%);
+              pointer-events: none; }
+    .tip { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <div class="brand"><div class="logo">C</div> CalcYaar <span class="badge">All‑in‑One</span></div>
+      <nav aria-label="Quick navigation">
+        <a href="#age">Age</a>
+        <a href="#bmi">BMI</a>
+        <a href="#emi">EMI</a>
+        <a href="#percentage">Percentage</a>
+        <a href="#unit">Unit</a>
+        <a href="#love">Love</a>
+        <a href="#friend">Friendship</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>All-in-One Calculators — Fast, Free, No Sign‑Up</h1>
+    <p>Age • BMI • Loan EMI • Percentage • Unit Converter • Fun Love & Friendship</p>
+  </section>
+
+  <main>
+    <div class="grid">
+      <!-- Age Calculator -->
+      <article id="age" class="card span-6" aria-labelledby="age-title">
+        <div class="spark"></div>
+        <h2 id="age-title">🗓️ Age Calculator</h2>
+        <p class="muted">DOB se exact years, months, days nikalo.</p>
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" max="" />
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn" onclick="calcAge()">Calculate Age</button>
+          <button class="btn secondary" onclick="resetAge()">Reset</button>
+        </div>
+        <button class="btn copy" onclick="copyResult('age-result')">Copy</button>
+        <div id="age-result" class="result" aria-live="polite">Result will appear here…</div>
+        <div class="tip tiny">Tip: Date picker me valid DOB select karo. Max = aaj ki date.</div>
+      </article>
+
+      <!-- BMI Calculator -->
+      <article id="bmi" class="card span-6" aria-labelledby="bmi-title">
+        <div class="spark"></div>
+        <h2 id="bmi-title">⚖️ BMI Calculator</h2>
+        <p class="muted">Height (cm) aur Weight (kg) se Body Mass Index.</p>
+        <div class="row two">
+          <div>
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" min="50" max="300" placeholder="e.g. 170" />
+          </div>
+          <div>
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" min="10" max="400" placeholder="e.g. 65" />
+          </div>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn" onclick="calcBMI()">Calculate BMI</button>
+          <button class="btn secondary" onclick="resetBMI()">Reset</button>
+        </div>
+        <button class="btn copy" onclick="copyResult('bmi-result')">Copy</button>
+        <div id="bmi-result" class="result" aria-live="polite">Result will appear here…</div>
+        <div class="tip tiny">Range: &lt;18.5 Underweight • 18.5–24.9 Normal • 25–29.9 Overweight • 30+ Obesity</div>
+      </article>
+
+      <!-- EMI Calculator -->
+      <article id="emi" class="card span-6" aria-labelledby="emi-title">
+        <div class="spark"></div>
+        <h2 id="emi-title">🏦 Loan EMI Calculator</h2>
+        <p class="muted">Principal, annual interest rate aur tenure se EMI nikalo.</p>
+        <div class="row three">
+          <div>
+            <label for="principal">Loan Amount (₹)</label>
+            <input type="number" id="principal" min="1000" step="1000" placeholder="e.g. 500000" />
+          </div>
+          <div>
+            <label for="rate">Annual Interest (%)</label>
+            <input type="number" id="rate" min="0" step="0.1" placeholder="e.g. 10" />
+          </div>
+          <div>
+            <label for="tenure">Tenure</label>
+            <input type="number" id="tenure" min="1" placeholder="e.g. 60" />
+          </div>
+        </div>
+        <div class="row two" style="margin-top:8px">
+          <div>
+            <label for="tenure-type">Tenure Type</label>
+            <select id="tenure-type">
+              <option value="months">Months</option>
+              <option value="years">Years</option>
+            </select>
+          </div>
+          <div style="display:flex; align-items:end; gap:10px;">
+            <button class="btn" onclick="calcEMI()">Calculate EMI</button>
+            <button class="btn secondary" onclick="resetEMI()">Reset</button>
+          </div>
+        </div>
+        <button class="btn copy" onclick="copyResult('emi-result')">Copy</button>
+        <div id="emi-result" class="result" aria-live="polite">Result will appear here…</div>
+        <div class="tip tiny">Formula: EMI = P·r·(1+r)^n / ((1+r)^n − 1); r = annual%/12/100, n = months</div>
+      </article>
+
+      <!-- Percentage Tools -->
+      <article id="percentage" class="card span-6" aria-labelledby="pct-title">
+        <div class="spark"></div>
+        <h2 id="pct-title">📊 Percentage Tools</h2>
+        <p class="muted">Teen quick tools: X% of Y, A is what % of B, Increase/Decrease.</p>
+        <div class="row two">
+          <div>
+            <label>X% of Y</label>
+            <div class="row two">
+              <input type="number" id="pct_x" placeholder="X%" />
+              <input type="number" id="pct_y" placeholder="Y" />
+            </div>
+            <button class="btn" style="margin-top:8px" onclick="pctOf()">Find</button>
+          </div>
+          <div>
+            <label>A is what % of B?</label>
+            <div class="row two">
+              <input type="number" id="pct_a" placeholder="A" />
+              <input type="number" id="pct_b" placeholder="B" />
+            </div>
+            <button class="btn" style="margin-top:8px" onclick="pctWhat()">Find</button>
+          </div>
+        </div>
+        <div class="row two" style="margin-top:10px">
+          <div>
+            <label>Increase B by X%</label>
+            <div class="row two">
+              <input type="number" id="inc_x" placeholder="X%" />
+              <input type="number" id="inc_b" placeholder="B" />
+            </div>
+            <button class="btn" style="margin-top:8px" onclick="pctInc()">Calculate</button>
+          </div>
+          <div>
+            <label>Decrease B by X%</label>
+            <div class="row two">
+              <input type="number" id="dec_x" placeholder="X%" />
+              <input type="number" id="dec_b" placeholder="B" />
+            </div>
+            <button class="btn" style="margin-top:8px" onclick="pctDec()">Calculate</button>
+          </div>
+        </div>
+        <button class="btn copy" onclick="copyResult('pct-result')">Copy</button>
+        <div id="pct-result" class="result" aria-live="polite">Result will appear here…</div>
+      </article>
+
+      <!-- Unit Converter -->
+      <article id="unit" class="card span-8" aria-labelledby="unit-title">
+        <div class="spark"></div>
+        <h2 id="unit-title">🧪 Unit Converter</h2>
+        <p class="muted">Length, Weight aur Temperature ke quick conversions.</p>
+        <div class="row three">
+          <div>
+            <label for="cat">Category</label>
+            <select id="cat" onchange="renderUnitOptions()">
+              <option value="length">Length</option>
+              <option value="weight">Weight</option>
+              <option value="temp">Temperature</option>
+            </select>
+          </div>
+          <div>
+            <label for="fromUnit">From</label>
+            <select id="fromUnit"></select>
+          </div>
+          <div>
+            <label for="toUnit">To</label>
+            <select id="toUnit"></select>
+          </div>
+        </div>
+        <div class="row two" style="margin-top:8px">
+          <input type="number" id="fromVal" placeholder="Enter value" />
+          <input type="text" id="toVal" placeholder="Converted value" readonly />
+        </div>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn" onclick="convertUnits()">Convert</button>
+          <button class="btn secondary" onclick="resetUnits()">Reset</button>
+        </div>
+        <button class="btn copy" onclick="copyResult('unit-result')">Copy</button>
+        <div id="unit-result" class="result" aria-live="polite">Result will appear here…</div>
+      </article>
+
+      <!-- Love Calculator -->
+      <article id="love" class="card span-4" aria-labelledby="love-title">
+        <div class="spark"></div>
+        <h2 id="love-title">💘 Love Calculator (Fun)</h2>
+        <p class="muted">Naam dalke ek fun compatibility score dekho. (Just for masti 😄)</p>
+        <label for="loveA">Your Name</label>
+        <input type="text" id="loveA" placeholder="e.g. Ayaan" />
+        <label for="loveB">Partner Name</label>
+        <input type="text" id="loveB" placeholder="e.g. Kiara" />
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn" onclick="loveCalc()">Calculate</button>
+          <button class="btn secondary" onclick="resetLove()">Reset</button>
+        </div>
+        <button class="btn copy" onclick="copyResult('love-result')">Copy</button>
+        <div id="love-result" class="result" aria-live="polite">Result will appear here…</div>
+      </article>
+
+      <!-- Friendship Calculator -->
+      <article id="friend" class="card span-4" aria-labelledby="friend-title">
+        <div class="spark"></div>
+        <h2 id="friend-title">🤝 Friendship Calculator (Fun)</h2>
+        <p class="muted">Dono doston ke naam dalke friendship % dekho.</p>
+        <label for="frA">Friend 1</label>
+        <input type="text" id="frA" placeholder="e.g. Aman" />
+        <label for="frB">Friend 2</label>
+        <input type="text" id="frB" placeholder="e.g. Riya" />
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn" onclick="friendCalc()">Calculate</button>
+          <button class="btn secondary" onclick="resetFriend()">Reset</button>
+        </div>
+        <button class="btn copy" onclick="copyResult('friend-result')">Copy</button>
+        <div id="friend-result" class="result" aria-live="polite">Result will appear here…</div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      © <span id="year"></span> CalcYaar • Made for fast daily tools. <span class="tiny">Feedback? Email hello@calcyaar.example</span>
+    </div>
+  </footer>
+
+  <script>
+    // ————— Utilities —————
+    const pad = (n) => n.toString().padStart(2,'0');
+    const formatINR = (n) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n);
+    const formatNum = (n, d=2) => new Intl.NumberFormat('en-IN', { maximumFractionDigits: d }).format(n);
+
+    function copyResult(id){
+      const el = document.getElementById(id);
+      const text = el.innerText.trim();
+      if(!text || /Result will appear/.test(text)) return alert('No result to copy yet!');
+      navigator.clipboard.writeText(text).then(()=>{
+        const btn = event.currentTarget; const old = btn.innerText; btn.innerText = 'Copied!';
+        setTimeout(()=>btn.innerText=old, 1200);
+      }).catch(()=>alert('Copy failed.'));
+    }
+
+    // ————— Age Calculator —————
+    document.getElementById('dob').max = new Date().toISOString().split('T')[0];
+    function calcAge(){
+      const dobVal = document.getElementById('dob').value;
+      const out = document.getElementById('age-result');
+      if(!dobVal) { out.textContent = 'Please select your Date of Birth.'; return; }
+      const dob = new Date(dobVal);
+      const today = new Date();
+      if(dob > today){ out.textContent = 'DOB cannot be in the future.'; return; }
+
+      let years = today.getFullYear() - dob.getFullYear();
+      let months = today.getMonth() - dob.getMonth();
+      let days = today.getDate() - dob.getDate();
+
+      if(days < 0){
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        days += prevMonth; months -= 1;
+      }
+      if(months < 0){ months += 12; years -= 1; }
+
+      const ageDays = Math.floor((today - dob)/(1000*60*60*24));
+      out.textContent = `Age: ${years} years, ${months} months, ${days} days\n(Approx ${formatNum(ageDays)} days old)`;
+    }
+    function resetAge(){ document.getElementById('dob').value=''; document.getElementById('age-result').textContent='Result will appear here…'; }
+
+    // ————— BMI Calculator —————
+    function calcBMI(){
+      const h = parseFloat(document.getElementById('height').value);
+      const w = parseFloat(document.getElementById('weight').value);
+      const out = document.getElementById('bmi-result');
+      if(!h || !w) { out.textContent = 'Please enter valid height & weight.'; return; }
+      const m = h/100; const bmi = w / (m*m);
+      let status = 'Normal';
+      if(bmi < 18.5) status = 'Underweight';
+      else if(bmi < 25) status = 'Normal';
+      else if(bmi < 30) status = 'Overweight';
+      else status = 'Obesity';
+      out.textContent = `BMI: ${bmi.toFixed(2)} — ${status}`;
+    }
+    function resetBMI(){ document.getElementById('height').value=''; document.getElementById('weight').value=''; document.getElementById('bmi-result').textContent='Result will appear here…'; }
+
+    // ————— EMI Calculator —————
+    function calcEMI(){
+      const P = parseFloat(document.getElementById('principal').value);
+      const annual = parseFloat(document.getElementById('rate').value);
+      let n = parseInt(document.getElementById('tenure').value,10);
+      const tType = document.getElementById('tenure-type').value;
+      const out = document.getElementById('emi-result');
+      if(!P || !annual || !n){ out.textContent = 'Please fill Loan Amount, Interest %, and Tenure.'; return; }
+      if(tType === 'years') n = n*12;
+      const r = annual/12/100;
+      if(r === 0){
+        const emi = P/n; const total = emi*n; const interest = total - P;
+        out.textContent = `EMI (no interest): ${formatINR(Math.round(emi))}\nTotal Payment: ${formatINR(Math.round(total))}\nTotal Interest: ${formatINR(Math.round(interest))}`;
+        return;
+      }
+      const pow = Math.pow(1+r, n);
+      const emi = P * r * pow / (pow - 1);
+      const total = emi * n;
+      const interest = total - P;
+      out.textContent = `Monthly EMI: ${formatINR(Math.round(emi))}\nTotal Payment: ${formatINR(Math.round(total))}\nTotal Interest: ${formatINR(Math.round(interest))}`;
+    }
+    function resetEMI(){ ['principal','rate','tenure'].forEach(id=>document.getElementById(id).value=''); document.getElementById('tenure-type').value='months'; document.getElementById('emi-result').textContent='Result will appear here…'; }
+
+    // ————— Percentage Tools —————
+    function pctOf(){
+      const x = parseFloat(document.getElementById('pct_x').value);
+      const y = parseFloat(document.getElementById('pct_y').value);
+      const out = document.getElementById('pct-result');
+      if(!isFinite(x) || !isFinite(y)) { out.textContent = 'Enter valid numbers for X and Y'; return; }
+      out.textContent = `${x}% of ${y} = ${formatNum(y * x/100)}`;
+    }
+    function pctWhat(){
+      const a = parseFloat(document.getElementById('pct_a').value);
+      const b = parseFloat(document.getElementById('pct_b').value);
+      const out = document.getElementById('pct-result');
+      if(!isFinite(a) || !isFinite(b) || b===0) { out.textContent = 'Enter valid numbers (B ≠ 0)'; return; }
+      out.textContent = `${a} is ${formatNum(a/b*100)}% of ${b}`;
+    }
+    function pctInc(){
+      const x = parseFloat(document.getElementById('inc_x').value);
+      const b = parseFloat(document.getElementById('inc_b').value);
+      const out = document.getElementById('pct-result');
+      if(!isFinite(x) || !isFinite(b)) { out.textContent = 'Enter valid numbers'; return; }
+      out.textContent = `${b} increased by ${x}% = ${formatNum(b * (1 + x/100))}`;
+    }
+    function pctDec(){
+      const x = parseFloat(document.getElementById('dec_x').value);
+      const b = parseFloat(document.getElementById('dec_b').value);
+      const out = document.getElementById('pct-result');
+      if(!isFinite(x) || !isFinite(b)) { out.textContent = 'Enter valid numbers'; return; }
+      out.textContent = `${b} decreased by ${x}% = ${formatNum(b * (1 - x/100))}`;
+    }
+
+    // ————— Unit Converter —————
+    const unitOptions = {
+      length: ['m','km','cm','ft','in'],
+      weight: ['kg','g','lb'],
+      temp:   ['C','F','K']
+    };
+    function renderUnitOptions(){
+      const cat = document.getElementById('cat').value;
+      const from = document.getElementById('fromUnit');
+      const to = document.getElementById('toUnit');
+      from.innerHTML = unitOptions[cat].map(u=>`<option value="${u}">${u}</option>`).join('');
+      to.innerHTML = unitOptions[cat].map(u=>`<option value="${u}">${u}</option>`).join('');
+      if(cat==='length'){ from.value='m'; to.value='ft'; }
+      if(cat==='weight'){ from.value='kg'; to.value='lb'; }
+      if(cat==='temp'){ from.value='C'; to.value='F'; }
+      document.getElementById('toVal').value='';
+      document.getElementById('unit-result').textContent='Result will appear here…';
+    }
+    function convertUnits(){
+      const cat = document.getElementById('cat').value;
+      const fromU = document.getElementById('fromUnit').value;
+      const toU = document.getElementById('toUnit').value;
+      const fromVal = parseFloat(document.getElementById('fromVal').value);
+      const out = document.getElementById('unit-result');
+      if(!isFinite(fromVal)) { out.textContent = 'Enter a valid number to convert.'; return; }
+      let result = 0;
+      if(cat==='length'){
+        // base meter
+        const toMeter = { m:1, km:1000, cm:0.01, ft:0.3048, in:0.0254 };
+        const inMeters = fromVal * toMeter[fromU];
+        const fromMeter = { m:1, km:1/1000, cm:100, ft:3.280839895, in:39.37007874 };
+        result = inMeters * fromMeter[toU];
+      } else if(cat==='weight'){
+        // base kg
+        const toKg = { kg:1, g:0.001, lb:0.45359237 };
+        const inKg = fromVal * toKg[fromU];
+        const fromKg = { kg:1, g:1000, lb:2.2046226218 };
+        result = inKg * fromKg[toU];
+      } else {
+        // temperature direct formulas
+        const C = (val, u) => (u==='C'? val : u==='F'? (val-32)*5/9 : val-273.15);
+        const to = (c, u) => (u==='C'? c : u==='F'? (c*9/5)+32 : c+273.15);
+        const c = C(fromVal, fromU);
+        result = to(c, toU);
+      }
+      document.getElementById('toVal').value = String(result);
+      out.textContent = `${fromVal} ${fromU} = ${formatNum(result)} ${toU}`;
+    }
+    function resetUnits(){ document.getElementById('fromVal').value=''; document.getElementById('toVal').value=''; renderUnitOptions(); }
+
+    // ————— Fun Calculators —————
+    function seededPercent(a,b,seedWord=''){
+      const s = (a.trim().toLowerCase()+"|"+b.trim().toLowerCase()+"|"+seedWord);
+      let hash = 0; for(let i=0;i<s.length;i++){ hash = (hash*31 + s.charCodeAt(i))>>>0; }
+      // map to 35..97 for fun-looking results
+      return 35 + (hash % 63); // 35–97
+    }
+    function loveCalc(){
+      const A = document.getElementById('loveA').value; const B = document.getElementById('loveB').value;
+      const out = document.getElementById('love-result');
+      if(!A || !B){ out.textContent = 'Please enter both names.'; return; }
+      const p = seededPercent(A,B,'love');
+      let msg = 'Nice vibes!'; if(p>80) msg='Perfect match vibes ✨'; else if(p<50) msg='Needs more effort 😅';
+      out.textContent = `${A} ❤ ${B} = ${p}%\n${msg} (Just for fun!)`;
+    }
+    function resetLove(){ document.getElementById('loveA').value=''; document.getElementById('loveB').value=''; document.getElementById('love-result').textContent='Result will appear here…'; }
+
+    function friendCalc(){
+      const A = document.getElementById('frA').value; const B = document.getElementById('frB').value;
+      const out = document.getElementById('friend-result');
+      if(!A || !B){ out.textContent = 'Please enter both names.'; return; }
+      const p = seededPercent(A,B,'friend');
+      let msg = 'Good friends!'; if(p>80) msg='Legendary dosti 💯'; else if(p<50) msg='New friendship stage 🙂';
+      out.textContent = `${A} 🤝 ${B} = ${p}%\n${msg} (Just for fun!)`;
+    }
+    function resetFriend(){ document.getElementById('frA').value=''; document.getElementById('frB').value=''; document.getElementById('friend-result').textContent='Result will appear here…'; }
+
+    // Init
+    renderUnitOptions();
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{ e.preventDefault(); document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth', block:'start'}); });
+    });
+  </script>
+</body>
+</html>
